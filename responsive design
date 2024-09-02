@@ -1,0 +1,6 @@
+/* src/App.css */
+@media (max-width: 768px) {
+    .property-list {
+        display: block;
+    }
+}

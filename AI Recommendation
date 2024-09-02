@@ -1,0 +1,23 @@
+# server/ai/recommendations.py
+import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+
+# Dummy data for commercial properties
+properties = pd.DataFrame({
+    'id': [1, 2, 3, 4],
+    'price': [500000, 1000000, 750000, 1500000],
+    'size': [2000, 5000, 3500, 7000]
+})
+
+# Dummy user preferences
+user_preferences = {'price': 800000, 'size': 4000}
+
+# Fit model
+model = NearestNeighbors(n_neighbors=2)
+model.fit(properties[['price', 'size']])
+
+# Find nearest properties
+distances, indices = model.kneighbors([[user_preferences['price'], user_preferences['size']]])
+recommended_properties = properties.iloc[indices[0]]
+
+print(recommended_properties)

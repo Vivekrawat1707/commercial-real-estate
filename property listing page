@@ -1,0 +1,32 @@
+// src/pages/PropertyList.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const PropertyList = () => {
+    const [properties, setProperties] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/properties')
+            .then(response => setProperties(response.data))
+            .catch(error => console.error(error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Commercial Properties</h1>
+            <ul>
+                {properties.map(property => (
+                    <li key={property._id}>
+                        <h2>{property.name}</h2>
+                        <p>{property.description}</p>
+                        <p>Price: ${property.price}</p>
+                        <p>Location: {property.location}</p>
+                        <img src={property.imageUrl} alt={property.name} />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default PropertyList;

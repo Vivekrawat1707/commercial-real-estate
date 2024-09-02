@@ -1,0 +1,32 @@
+// src/pages/Recommendations.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Recommendations = () => {
+    const [recommendations, setRecommendations] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/recommendations')
+            .then(response => setRecommendations(response.data))
+            .catch(error => console.error(error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Recommended Commercial Properties</h1>
+            <ul>
+                {recommendations.map(property => (
+                    <li key={property._id}>
+                        <h2>{property.name}</h2>
+                        <p>{property.description}</p>
+                        <p>Price: ${property.price}</p>
+                        <p>Location: {property.location}</p>
+                        <img src={property.imageUrl} alt={property.name} />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default Recommendations;

@@ -1,0 +1,17 @@
+// server/routes/recommendations.js
+const express = require('express');
+const { exec } = require('child_process');
+
+const router = express.Router();
+
+router.get('/', (req, res) => {
+    exec('python3 server/ai/recommendations.py', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+        }
+        res.json(JSON.parse(stdout));
+    });
+});
+
+module.exports = router;
